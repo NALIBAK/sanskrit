@@ -1,0 +1,402 @@
+:root {
+    /* Devotional Palette - Light Theme (Default) */
+    --bg-color: #FAF9F6;
+    /* Ivory */
+    --text-color: #2C2C2C;
+    /* Charcoal */
+    --secondary-text: #5A5A5A;
+    --accent-color: #C19A6B;
+    /* Sandalwood */
+    --highlight-color: #FFD580;
+    /* Golden Light */
+    --button-color: #6A5ACD;
+    /* Indigo */
+    --button-text: #FFFFFF;
+    --success-color: #4CAF50;
+    --card-bg: #FFFFFF;
+    --border-color: #E0E0E0;
+    --font-heading: 'Merriweather', serif;
+    --font-body: 'Lato', sans-serif;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    /* Black */
+    --text-color: #EAEAEA;
+    /* Soft White */
+    --secondary-text: #B0B0B0;
+    --accent-color: #C19A6B;
+    /* Sandalwood */
+    --highlight-color: #B8860B;
+    /* Darker Gold for contrast */
+    --button-color: #9370DB;
+    /* Purple */
+    --button-text: #FFFFFF;
+    --success-color: #81C784;
+    --card-bg: #1E1E1E;
+    --border-color: #333333;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Layout */
+header {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--accent-color);
+}
+
+.header-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-family: var(--font-body);
+}
+
+.nav-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dictionary Styles */
+.search-bar {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--accent-color);
+    border-radius: 12px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.toggle-meaning-btn {
+    background-color: var(--button-color);
+    color: var(--button-text);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.vocab-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.vocab-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.vocab-sanskrit {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.vocab-tamil {
+    font-size: 1rem;
+    color: var(--secondary-text);
+}
+
+.vocab-english {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--secondary-text);
+}
+
+.vocab-card.hidden-meaning .vocab-tamil,
+.vocab-card.hidden-meaning .vocab-english {
+    opacity: 0;
+    /* Keeps layout stable, hides text */
+}
+
+/* Sentence Mixer Styles */
+.mixer-container {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    border-top: 4px solid var(--highlight-color);
+}
+
+.mixer-interface {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.mixer-column {
+    flex: 1;
+    min-width: 200px;
+}
+
+.mixer-column h3 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.word-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.option-btn {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.option-btn:hover {
+    border-color: var(--accent-color);
+    background-color: rgba(193, 154, 107, 0.1);
+}
+
+.option-btn.selected {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.result-area {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    border: 2px dashed var(--accent-color);
+}
+
+.result-sanskrit {
+    font-size: 2rem;
+    color: var(--button-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Reader Styles */
+.reader-content {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.shanti-mantra {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 213, 128, 0.1);
+    /* Low opacity highlight */
+    border-radius: 8px;
+    border-left: 4px solid var(--highlight-color);
+}
+
+.verse-card {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.verse-card:last-child {
+    border-bottom: none;
+}
+
+.verse-sanskrit {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.verse-tamil {
+    font-size: 1.1rem;
+    text-align: center;
+    color: var(--secondary-text);
+    margin-bottom: 1rem;
+}
+
+.verse-commentary {
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+}
+
+.verse-commentary h4 {
+    color: var(--button-color);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .vocab-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .mixer-interface {
+        flex-direction: column;
+    }
+
+    .result-sanskrit {
+        font-size: 1.5rem;
+    }
+}
