@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanskrit Learning | 6 Months to Fluency</title>
+    <!-- Google Fonts: Merriweather (Serif) & Lato (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>🕉️</span> Samskritam
+            </div>
+            <nav>
+                <button class="nav-btn active" onclick="showSection('dictionary')">Dictionary</button>
+                <button class="nav-btn" onclick="showSection('mixer')">Mixer</button>
+                <button class="nav-btn" onclick="showSection('reader')">Library (Texts)</button>
+                <button class="nav-btn" onclick="showSection('alphabet')">Alphabet</button>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">🌓</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- FEATURE 1: DICTIONARY -->
+        <section id="dictionary" class="section active">
+            <div class="controls">
+                <button class="toggle-meaning-btn" onclick="toggleMeanings()">👁️ Hide Meanings</button>
+            </div>
+            <input type="text" id="search-bar" class="search-bar" placeholder="Search in Sanskrit, Tamil, or English..."
+                onkeyup="filterVocab()">
+
+            <div id="vocab-grid" class="vocab-grid">
+                <!-- Javascript will populate this -->
+            </div>
+        </section>
+
+        <!-- FEATURE 2: SENTENCE MIXER -->
+        <section id="mixer" class="section">
+            <div class="mixer-container">
+                <h2>Sentence Builder</h2>
+                <p>Build simple sentences to master the "Present Tense" (Lat Lakara).</p>
+                <br>
+
+                <div class="mixer-interface">
+                    <!-- Column 1: Subject -->
+                    <div class="mixer-column">
+                        <h3>Subject (Karta)</h3>
+                        <div id="subject-options" class="word-options">
+                            <!-- Populated by JS -->
+                            <button class="option-btn" onclick="selectSubject('aham', this)">
+                                <strong>अहम्</strong><br><small>I</small>
+                            </button>
+                            <button class="option-btn" onclick="selectSubject('sah', this)">
+                                <strong>सः</strong><br><small>He</small>
+                            </button>
+                            <button class="option-btn" onclick="selectSubject('sa', this)">
+                                <strong>सा</strong><br><small>She</small>
+                            </button>
+                            <button class="option-btn" onclick="selectSubject('twam', this)">
+                                <strong>त्वम्</strong><br><small>You</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Verb -->
+                    <div class="mixer-column">
+                        <h3>Verb (Kriya)</h3>
+                        <div id="verb-options" class="word-options">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-area">
+                    <div id="result-sanskrit" class="result-sanskrit">...</div>
+                    <div id="result-tamil" class="result-tamil">...</div>
+                    <div id="result-english" class="result-english">...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE 3: SACRED TEXTS (Reader) -->
+        <section id="reader" class="section">
+            <div class="reader-content">
+                <div class="reader-controls"
+                    style="margin-bottom: 2rem; text-align: center; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <!-- Category Selector -->
+                    <select id="text-category" class="search-bar" onchange="updateTextCategory()"
+                        style="width: auto; padding: 0.5rem 2rem;">
+                        <option value="upanishads">Principal Upanishads</option>
+                        <option value="suktams">Pancha Suktams</option>
+                    </select>
+
+                    <!-- Text Selector -->
+                    <select id="text-select" class="search-bar" onchange="renderText(this.value)"
+                        style="width: auto; padding: 0.5rem 2rem;">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <h1 id="reader-title"></h1>
+                <h3 id="reader-subtitle" style="text-align: center; color: var(--secondary-text); margin-bottom: 2rem;">
+                </h3>
+
+                <!-- Shanti Mantra (Only for Upanishads usually) -->
+                <div id="shanti-mantra-container" class="shanti-mantra"></div>
+
+                <!-- Verses -->
+                <div id="verses-container"></div>
+            </div>
+        </section>
+
+        <!-- FEATURE 5: ALPHABET & LETTER MIXER -->
+        <section id="alphabet" class="section">
+            <div class="reader-content" style="max-width: 900px;">
+                <h1 style="text-align: center; margin-bottom: 2rem;">Sanskrit Varnamala (Alphabet)</h1>
+
+                <!-- Tab for Vowels/Consonants -->
+                <div class="alphabet-charts">
+                    <div class="chart-section">
+                        <h3>Vowels (Swar)</h3>
+                        <div id="vowels-grid" class="vocab-grid"
+                            style="grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));"></div>
+                    </div>
+                    <div class="chart-section" style="margin-top: 2rem;">
+                        <h3>Consonants (Vyanjan)</h3>
+                        <div id="consonants-grid" class="vocab-grid"
+                            style="grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));"></div>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0; border: 1px solid var(--accent-color);">
+
+                <!-- Letter Mixer -->
+                <div class="mixer-container">
+                    <h2>Gunitaakshara Builder (Letter Mixer)</h2>
+                    <p>Combine Consonants + Vowels to create syllables.</p>
+                    <br>
+
+                    <div class="mixer-interface">
+                        <div class="mixer-column">
+                            <h3>1. Consonant</h3>
+                            <select id="mixer-consonant" class="search-bar" onchange="updateLetterMixer()">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                        <div class="mixer-column"
+                            style="display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+                            +
+                        </div>
+                        <div class="mixer-column">
+                            <h3>2. Matra (Vowel)</h3>
+                            <select id="mixer-vowel" class="search-bar" onchange="updateLetterMixer()">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="result-area" style="margin-top: 1rem;">
+                        <div id="mixer-result-sanskrit" class="result-sanskrit" style="font-size: 4rem;">...</div>
+                        <div id="mixer-result-tamil" class="result-tamil" style="font-size: 2rem;">...</div>
+                        <div id="mixer-result-details" class="result-english"></div>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0; border: 1px solid var(--accent-color);">
+
+                <!-- Full Barakhadi Chart -->
+                <div class="barakhadi-container">
+                    <h2 style="text-align: center;">Complete Syllable Chart (Barakhadi)</h2>
+                    <p style="text-align: center; margin-bottom: 2rem;">All combinations of Consonants and Vowels.</p>
+                    <div id="barakhadi-grid" class="vocab-grid"
+                        style="grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with ❤️ for Sanskrit & Tamil by 𑌸𑍁. 𑌸𑌿. 𑌕𑌬𑌿𑌲 𑌦𑍀𑌕𑍍𑌷𑌿𑌤°𑍍</p>
+        <p>references https://sanskritdocuments.org/
+            https://vignanam.org/</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
